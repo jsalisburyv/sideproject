@@ -1,0 +1,26 @@
+# USAGE: docker build --build-arg="MOJO_AUTH={token}" -t wood-defect-detection-model:latest .
+
+FROM ubuntu:latest
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY model/ /app
+
+RUN apt-get -y update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl git 
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python3-venv
+
+# Install Mojo
+ARG MOJO_AUTH
+RUN curl https://get.modular.com | sh - 
+RUN modular auth $MOJO_AUTH
+RUN modular clean
+RUN modular install mojo
+ENV MODULAR_HOME="/root/.modular"
+ENV PATH="/root/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
+
+# Install any needed python packages specified in requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt

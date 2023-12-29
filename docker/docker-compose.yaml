@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  model:
+    container_name: wood-defect-detection-model
+    image: wood-defect-detection-model:latest
+    build:
+      dockerfile: model/Dockerfile.model
+      args:
+        MOJO_AUTH: ${MOJO_AUTH_TOKEN}
+      tags:
+        - "wood-defect-detection-model:1.0"
+
+    volumes:
+      - ../app:/app
+
+    stdin_open: true 
+    tty: true
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
