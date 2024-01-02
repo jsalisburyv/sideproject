@@ -1,4 +1,4 @@
-# USAGE: docker build --build-arg="MOJO_AUTH={token}" -t wood-defect-detection-model:latest .
+# USAGE: docker build --build-arg="MOJO_AUTH={token}" -t strunky25/wood-defect-detection:modelX.0 .
 
 FROM ubuntu:latest
 

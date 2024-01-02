@@ -3,13 +3,13 @@ version: '3.8'
 services:
   model:
     container_name: wood-defect-detection-model
-    image: wood-defect-detection-model:latest
+    image: strunky25/wood-defect-detection:latest
     build:
       dockerfile: model/Dockerfile.model
       args:
         MOJO_AUTH: ${MOJO_AUTH_TOKEN}
       tags:
-        - "wood-defect-detection-model:1.0"
+        - "strunky25/wood-defect-detection:model1.0"
 
     volumes:
       - ../app:/app
